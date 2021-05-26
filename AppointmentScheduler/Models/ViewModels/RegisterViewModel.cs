@@ -8,11 +8,11 @@ namespace AppointmentScheduler.Models.ViewModels
 {
     public class RegisterViewModel
     {
+        [EmailAddress]
         [Required]
         public string Email { get; set; }
 
         [Required]
-        [EmailAddress]
         public string Name { get; set; }
 
         [Required]
