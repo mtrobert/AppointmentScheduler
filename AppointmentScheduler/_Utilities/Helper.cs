@@ -8,9 +8,9 @@ namespace AppointmentScheduler._Utilities
 {
     public static class Helper
     {
-        private static string Admin = "Admin";
-        private static string Client = "Client";
-        private static string Hairdresser = "Hairdresser";
+        public static string Admin = "Admin";
+        public static string Client = "Client";
+        public static string Hairdresser = "Hairdresser";
 
         public static List<SelectListItem> DropDown_GetRoles()
         {
