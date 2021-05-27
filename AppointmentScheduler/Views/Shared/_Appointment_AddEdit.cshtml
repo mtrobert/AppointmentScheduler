@@ -1,7 +1,39 @@
 ﻿<div class="modal" role="dialog" id="appointmentInput" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            Hello
+            <form id="appointmentForm" novalidate="novalidate" autocomplete="off">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add/Edit Appointment</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" maxlength="100" class="form-control" id="title" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Description</label>
+                        <textarea class="form-control" id="description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Select Client</label>
+                        <select id="clientId" asp-items="@(new SelectList(ViewBag.ClientList, "Id","Name"))" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Duration</label>
+                        <select id="duration" asp-items="@(new SelectList(ViewBag.Duration))" class="form-control"></select>
+                    </div>
+                    <input type="hidden" id="id" />
+                </div>
+
+                <div class="modal-footer">
+
+                </div>
+            </form>
         </div>
     </div>
 </div>
