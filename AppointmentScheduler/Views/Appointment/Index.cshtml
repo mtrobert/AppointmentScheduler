@@ -1,0 +1,19 @@
+﻿@*@model AppointmentScheduler.Models.ViewModels.HairdresserVM*@
+
+<div class="row">
+    <div class="container">
+        @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Admin))
+        {
+        <div class="form-group row col-2">
+            <label>Select Hairdresser</label>
+            @Html.DropDownList("hairdresserId", new SelectList(ViewBag.HairdresserList, "Id", "Name"),new { @class="form-control select2"})
+        </div>
+        }
+
+    <div id="calendar"></div>
+    </div>
+</div>
+
+
+
+<partial name="_Appointment_AddEdit"/>

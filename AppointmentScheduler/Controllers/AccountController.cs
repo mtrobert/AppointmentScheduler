@@ -40,7 +40,7 @@ namespace AppointmentScheduler.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Appointment");
                 }
 
                 ModelState.AddModelError("", "Login failed, one or more details are incorrect.");

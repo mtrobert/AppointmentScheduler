@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AppointmentScheduler.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,16 @@ namespace AppointmentScheduler.Controllers
 {
     public class AppointmentController : Controller
     {
+        private readonly IAppointmentService _appointmentService;
+
+        public AppointmentController(IAppointmentService appointmentService)
+        {
+            _appointmentService = appointmentService;
+        }
+
         public IActionResult Index()
         {
+            ViewBag.HairdresserList = _appointmentService.GetClientList();
             return View();
         }
     }
