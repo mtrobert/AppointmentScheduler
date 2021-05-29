@@ -25,15 +25,16 @@
 
                     <div class="form-group">
                         <label for="title">Duration</label>
-                        <select id="duration" asp-items="@(new SelectList(ViewBag.Duration))" class="form-control"></select>
+                        <select id="duration" asp-items="@(ViewBag.Duration)" class="form-control"></select>
                     </div>
                     <input type="hidden" id="id" />
                 </div>
 
                 <div class="modal-footer">
-
+                    <button id="btn_submit" class="btn btn-success" type="button" onclick="onSubmitForm()">Submit</button> &nbsp;
+                    <button id="btn_close" class="btn btn-secondary" type="button" onclick="onCloseModal()">Close</button>
                 </div>
-            </form>
+</form>
         </div>
     </div>
 </div>
