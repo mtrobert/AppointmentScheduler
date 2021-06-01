@@ -11,6 +11,18 @@ namespace AppointmentScheduler._Utilities
         public static string Admin = "Admin";
         public static string Client = "Client";
         public static string Hairdresser = "Hairdresser";
+        public static string appointmentAdded = "Appointment added successfully.";
+        public static string appointmentUpdated = "Appointment updated successfully.";
+        public static string appointmentDeleted = "Appointment deleted successfully.";
+        public static string appointmentExists = "Appointment for selected date and time already exists.";
+        public static string appointmentNotExists = "Appointment not exists.";
+
+        public static string appointmentAddError = "Something went wront, Please try again.";
+        public static string appointmentUpdatError = "Something went wront, Please try again.";
+        public static string somethingWentWrong = "Something went wront, Please try again.";
+
+        public static int FailureCode = 0;
+        public static int SuccessCode = 1;
 
         public static List<SelectListItem> DropDown_GetRoles()
         {

@@ -10,8 +10,8 @@ namespace AppointmentScheduler.Models.ViewModels
         public int? Id { get; set; }
         public string Title { get; set; }
         public string Desctiption { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public int Duration { get; set; }
         public string HairdresserId { get; set; }
         public string ClientId { get; set; }

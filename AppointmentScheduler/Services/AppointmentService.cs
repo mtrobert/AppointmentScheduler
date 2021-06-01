@@ -17,6 +17,38 @@ namespace AppointmentScheduler.Services
             _db = db;
         }
 
+        public async Task<int> AddUpdate(AppointmentVM appointmentVM)
+        {
+            var startDate = DateTime.Parse(appointmentVM.StartDate);
+            var endDate = DateTime.Parse(appointmentVM.StartDate).AddMinutes(Convert.ToDouble(appointmentVM.Duration));
+
+            if (appointmentVM != null && appointmentVM.Id > 0)
+            {
+                //update appointment
+                return 1;
+            }
+            else
+            {
+                //create appointment
+                Appointment appointment = new Appointment
+                {
+                    Title = appointmentVM.Title,
+                    Desctiption = appointmentVM.Desctiption,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Duration = appointmentVM.Duration,
+                    HairdresserId = appointmentVM.HairdresserId,
+                    ClientId = appointmentVM.ClientId,
+                    IsHairdresserApproved = false,
+                    AdminId = appointmentVM.AdminId
+                };
+
+                _db.Appointments.Add(appointment);
+                await _db.SaveChangesAsync();
+                return 2;
+            }
+        }
+
         public List<ClientVM> GetClientList()
         {
             var clients = (from user in _db.Users

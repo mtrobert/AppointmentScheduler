@@ -10,6 +10,7 @@ namespace AppointmentScheduler.Services
     {
         public List<HairdresserVM> GetHairdresserList();
         public List<ClientVM> GetClientList();
+        public Task<int> AddUpdate(AppointmentVM appointmentVM);
 
     }
 }

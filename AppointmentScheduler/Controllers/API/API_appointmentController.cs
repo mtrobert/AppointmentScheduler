@@ -1,4 +1,6 @@
-﻿using AppointmentScheduler.Services;
+﻿using AppointmentScheduler._Utilities;
+using AppointmentScheduler.Models.ViewModels;
+using AppointmentScheduler.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,9 +28,33 @@ namespace AppointmentScheduler.Controllers.API
             _role = _httpCA.HttpContext.User.FindFirstValue(ClaimTypes.Role);
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        [Route("SaveCalendarData")]
+        public IActionResult SaveCalendarData(AppointmentVM appointmentVM)
         {
-            return View();
+            CommonResponse<int> commonResponse = new CommonResponse<int>();
+
+            try
+            {
+                commonResponse.Status = _aS.AddUpdate(appointmentVM).Result;
+                if (commonResponse.Status == 1)
+                {
+                    commonResponse.Message = Helper.appointmentUpdated;
+                }
+
+                if (commonResponse.Status == 2)
+                {
+                    commonResponse.Message = Helper.appointmentAdded;
+                }
+            }
+            catch (Exception e)
+            {
+
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.FailureCode;
+            }
+
+            return Ok(commonResponse);
         }
     }
 }

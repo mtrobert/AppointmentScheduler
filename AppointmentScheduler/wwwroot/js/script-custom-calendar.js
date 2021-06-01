@@ -1,5 +1,11 @@
-﻿$(document).ready(function ()
+﻿var routeUrl = location.protocol + "//" + location.host;
+$(document).ready(function ()
 {
+    $("#appointmentDate").kendoDateTimePicker(
+        {
+            value: new Date(),
+            dateInput: false
+        });
     InitializeCalendar();
 });
 
@@ -44,6 +50,51 @@ function onShowModal(obj, isEventDetails)
     $("#appointmentInput").modal("show");
 }
 
-function onCloseModal(obj, isEventDetails) {
+function onCloseModal(obj, isEventDetails)
+{
     $("#appointmentInput").modal("hide");
+}
+
+function onSubmitForm()
+{
+    var requestData =
+    {
+        Id: parseInt($("#id").val()),
+        Title: $("#title").val(),
+        Desctiption: $("#description").val(),
+        StartDate: $("#appointmentDate").val(),
+        Duration: $("#duration").val(),
+        HairdresserId: $("#hairdresserId").val(),
+        ClientId: $("#clientId").val()
+    }
+
+    $.ajax(
+        {
+            url: routeUrl + '/api/Appointment/SaveCalendarData',
+            type: 'POST',
+            data: JSON.stringify(requestData),
+            contentType: 'application/json',
+            success: function (response)
+            {
+                if (response.status === 1 || response.status === 2)
+                {
+                    $.notify(response.message, "success");
+                    onCloseModal();
+                }
+                else
+                {
+                    $.notify(response.message, "error");
+                }
+            },
+            error: function (xhr)
+            {
+                $.notify("Error", "error");
+
+            }
+        });
+}
+
+function CheckValidations()
+{
+
 }
