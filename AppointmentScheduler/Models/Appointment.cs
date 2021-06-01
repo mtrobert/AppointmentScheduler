@@ -16,6 +16,6 @@ namespace AppointmentScheduler.Models
         public string HairdresserId { get; set; }
         public string ClientId { get; set; }
         public string AdminId { get; set; }
-        public bool IsDoctorApproved { get; set; }
+        public bool IsHairdresserApproved { get; set; }
     }
 }
