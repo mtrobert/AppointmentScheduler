@@ -49,11 +49,107 @@ namespace AppointmentScheduler.Controllers.API
             }
             catch (Exception e)
             {
-
                 commonResponse.Message = e.Message;
                 commonResponse.Status = Helper.FailureCode;
             }
 
+            return Ok(commonResponse);
+        }
+
+        [HttpGet]
+        [Route("GetCalendarData")]
+        public IActionResult GetCalendarData(string hairdresserId)
+        {
+            CommonResponse<List<AppointmentVM>> commonResponse = new CommonResponse<List<AppointmentVM>>();
+            try
+            {
+                if (_role == Helper.Client)
+                {
+                    commonResponse.Data_Enum = _aS.ClientEventsById(_loginUserId);
+                    commonResponse.Status = Helper.SuccessCode;
+                }
+                else if(_role == Helper.Hairdresser)
+                {
+                    commonResponse.Data_Enum = _aS.HairdresserEventsById(_loginUserId);
+                    commonResponse.Status = Helper.SuccessCode;
+                }
+                else
+                {
+                    commonResponse.Data_Enum = _aS.HairdresserEventsById(hairdresserId);
+                    commonResponse.Status = Helper.SuccessCode;
+                }
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.FailureCode;
+            }
+            return Ok(commonResponse);
+        }
+
+        [HttpGet]
+        [Route("GetCalendarDataById/{appointmentId}")]
+        public IActionResult GetCalendarDataById(int appointmentId)
+        {
+            CommonResponse<AppointmentVM> commonResponse = new CommonResponse<AppointmentVM>();
+            try
+            {              
+                commonResponse.Data_Enum = _aS.GetById(appointmentId);
+                commonResponse.Status = Helper.SuccessCode;
+                
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.FailureCode;
+            }
+            return Ok(commonResponse);
+        }
+
+        [HttpGet]
+        [Route("ConfirmAppointment/{appointmentId}")]
+        public IActionResult ConfirmAppointment(int appointmentId)
+        {
+            CommonResponse<int> commonResponse = new CommonResponse<int>();
+            try
+            {
+                var result = _aS.ConfirmEvent(appointmentId).Result;
+
+                if (result > 0)
+                {
+                    commonResponse.Status = Helper.SuccessCode;
+                    commonResponse.Message = Helper.appointmentConfirmed;
+                }
+                else
+                {
+                    commonResponse.Status = Helper.FailureCode;
+                    commonResponse.Message = Helper.appointmentConfirmedError;
+                }
+
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.FailureCode;
+            }
+            return Ok(commonResponse);
+        }
+
+        [HttpGet]
+        [Route("DeleteAppointment/{appointmentId}")]
+        public async Task<IActionResult> DeleteAppointment(int appointmentId)
+        {
+            CommonResponse<int> commonResponse = new CommonResponse<int>();
+            try
+            {                
+                commonResponse.Status = await _aS.Delete(appointmentId);
+                commonResponse.Message = commonResponse.Status == 1 ? Helper.appointmentDeleted : Helper.somethingWentWrong;
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.FailureCode;
+            }
             return Ok(commonResponse);
         }
     }

@@ -6,7 +6,9 @@
         {
         <div class="form-group row col-2">
             <label>Select Hairdresser</label>
-            @Html.DropDownList("hairdresserId", new SelectList(ViewBag.HairdresserList, "Id", "Name"),new { @class="form-control select2"})
+            @Html.DropDownList("hairdresserId", new SelectList(ViewBag.HairdresserList, "Id", "Name"),new { @class="form-control select2",
+                                                                @onchange= "onHairdresserChange()"
+                                                                })
         </div>
         }
 

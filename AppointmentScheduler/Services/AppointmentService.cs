@@ -76,5 +76,79 @@ namespace AppointmentScheduler.Services
 
             return haidressers;
         }
+
+        public List<AppointmentVM> HairdresserEventsById(string hairdresserId)
+        {
+            return _db.Appointments.Where(id => id.HairdresserId == hairdresserId).ToList().Select(c => new AppointmentVM()
+            { 
+                Id = c.Id,
+                Desctiption = c.Desctiption,
+                StartDate = c.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate= c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                Title = c.Title,
+                Duration = c.Duration,
+                IsHairdresserApproved = c.IsHairdresserApproved
+
+            }).ToList();
+        }
+
+        public List<AppointmentVM> ClientEventsById(string clientId)
+        {
+            return _db.Appointments.Where(id => id.ClientId == clientId).ToList().Select(c => new AppointmentVM()
+            {
+                Id = c.Id,
+                Desctiption = c.Desctiption,
+                StartDate = c.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate = c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                Title = c.Title,
+                Duration = c.Duration,
+                IsHairdresserApproved = c.IsHairdresserApproved
+
+            }).ToList();
+        }
+
+        public AppointmentVM GetById(int id)
+        {
+            return _db.Appointments.Where(x => x.Id == id).ToList().Select(c => new AppointmentVM()
+            {
+                Id = c.Id,
+                Desctiption = c.Desctiption,
+                StartDate = c.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate = c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                Title = c.Title,
+                Duration = c.Duration,
+                IsHairdresserApproved = c.IsHairdresserApproved,
+                ClientId = c.ClientId,
+                HairdresserId = c.HairdresserId,
+                ClientName = _db.Users.Where(x => x.Id == c.ClientId).Select(x => x.Name).FirstOrDefault(),
+                HairdresserName = _db.Users.Where(x => x.Id == c.HairdresserId).Select(x => x.Name).FirstOrDefault()
+
+
+            }).SingleOrDefault();
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var appointment = _db.Appointments.FirstOrDefault(x => x.Id == id);
+
+            if (appointment != null)
+            {
+                 _db.Appointments.Remove(appointment);
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
+
+        public async Task<int> ConfirmEvent(int id)
+        {
+           var appointment = _db.Appointments.FirstOrDefault(x => x.Id == id);
+
+            if (appointment != null)
+            {
+                appointment.IsHairdresserApproved = true;
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
     }
 }

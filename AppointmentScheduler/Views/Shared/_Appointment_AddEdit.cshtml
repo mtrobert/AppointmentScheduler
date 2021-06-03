@@ -4,7 +4,15 @@
             <form id="appointmentForm" novalidate="novalidate" autocomplete="off">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Add/Edit Appointment</h4>
+                    @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Admin))
+                    {
+                        <h4 class="modal-title">Add/Edit Appointment</h4>
+
+                    }
+                    else
+                    {
+                        <h4 class="modal-title">Appointment Details</h4>
+                    }
                 </div>
 
                 <div class="modal-body">
@@ -17,11 +25,46 @@
                         <label for="title">Description</label>
                         <textarea class="form-control" id="description"></textarea>
                     </div>
+                    @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Admin))
+                    {
+                        <div class="form-group">
+                            <label for="title">Select Client</label>
+                            <select id="clientId" asp-items="@(new SelectList(ViewBag.ClientList, "Id","Name"))" class="form-control"></select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="title">Select Client</label>
-                        <select id="clientId" asp-items="@(new SelectList(ViewBag.ClientList, "Id","Name"))" class="form-control"></select>
-                    </div>
+                        <div class="form-group">
+                            <label for="lblStatus">Status</label>
+                            <label disabled class="form-control" id="lblStatus" />
+                        </div>
+                    }
+                    else
+                    {
+                        @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Hairdresser))
+                        {
+                            <div class="form-group">
+                                <label for="lblClientName">Client Name</label>
+                                <label disabled class="form-control" id="lblClientName" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lblStatus">Status</label>
+                                <label disabled class="form-control" id="lblStatus" />
+                            </div>
+                        }
+
+                        @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Client))
+                        {
+                            <div class="form-group">
+                                <label for="lblHairdresserName">Hairdresser Name</label>
+                                <label disabled class="form-control" id="lblHairdresserName" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lblStatus">Status</label>
+                                <label disabled class="form-control" id="lblStatus" />
+                            </div>
+                        }
+                    }
 
                     <div class="form-group">
                         <label for="title">Start Date Time</label>
@@ -36,7 +79,24 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button id="btn_submit" class="btn btn-success" type="button" onclick="onSubmitForm()">Submit</button> &nbsp;
+
+                    @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Admin))
+                    {
+                        <button id="btn_submit" class="btn btn-success" type="button" onclick="onSubmitForm()">Submit</button>
+                        <button id="btn_delete" class="btn btn-danger" type="button" onclick="onDeleteAppointment()">Delete</button>
+
+                    }
+
+                    @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Hairdresser))
+                    {
+                        <button id="btn_confirm" class="btn btn-success" type="button" onclick="onConfirmAppointment()">Confirm</button>
+                        <button id="btn_delete" class="btn btn-danger" type="button" onclick="onDeleteAppointment()">Delete</button>
+
+                    }
+
+
+
+
                     <button id="btn_close" class="btn btn-secondary" type="button" onclick="onCloseModal()">Close</button>
                 </div>
 </form>
