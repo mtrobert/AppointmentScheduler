@@ -1,6 +1,7 @@
 ﻿using AppointmentScheduler._Utilities;
 using AppointmentScheduler.Models;
 using AppointmentScheduler.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,6 +41,8 @@ namespace AppointmentScheduler.Controllers
 
                 if (result.Succeeded)
                 {
+                    var user =await _userManager.FindByNameAsync(model.Email);
+                    HttpContext.Session.SetString("ssUserName", user.Name);
                     return RedirectToAction("Index", "Appointment");
                 }
 
