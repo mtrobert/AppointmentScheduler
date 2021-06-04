@@ -98,8 +98,6 @@ function onShowModal(obj, isEventDetails)
         $("#id").val(obj.id);
         $("#lblHairdresserName").html(obj.hairdresserName);
         $("#lblClientName").html(obj.clientName);
-        $('#btn_delete').removeClass('d-none');
-
 
         if (obj.isHairdresserApproved) {
             $("#lblStatus").html('Approved');
@@ -109,16 +107,11 @@ function onShowModal(obj, isEventDetails)
         else
         {
             $("#lblStatus").html('Pending');
-            $("#btn_submit").removeClass('d-none');
-            $("#btn_confirm").removeClass('d-none');
-
         }
     }
     else {
         $("#appointmentDate").val(obj.startStr + " " + new moment().format("hh:mm A"));
         $("#id").val(0);
-        $('#btn_delete').addClass('d-none');
-        $("#btn_submit").removeClass('d-none');
     }
     $("#appointmentInput").modal("show");
 }
@@ -130,6 +123,8 @@ function onCloseModal(obj, isEventDetails)
     $("#title").val('');
     $("#description").val('');
     $("#appointmentDate").val('');
+    $("#duration").val('');
+    $("#clientId").val('');
     $("#appointmentInput").modal("hide");
 }
 
