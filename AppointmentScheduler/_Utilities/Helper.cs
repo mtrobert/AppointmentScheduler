@@ -26,14 +26,23 @@ namespace AppointmentScheduler._Utilities
         public static int FailureCode = 0;
         public static int SuccessCode = 1;
 
-        public static List<SelectListItem> DropDown_GetRoles()
+        public static List<SelectListItem> DropDown_GetRoles(bool isAdmin)
         {
-            return new List<SelectListItem>
+            if (isAdmin)
             {
-                new SelectListItem{Value = Helper.Admin, Text = Helper.Admin},
-                new SelectListItem{Value = Helper.Hairdresser, Text = Helper.Hairdresser},
-                new SelectListItem{Value = Helper.Client, Text = Helper.Client}
-            };
+                return new List<SelectListItem>
+                {
+                    new SelectListItem { Value = Helper.Admin, Text = Helper.Admin },                
+                };
+            }
+            else
+            {
+                return new List<SelectListItem>
+                {                    
+                    new SelectListItem{Value = Helper.Hairdresser, Text = Helper.Hairdresser},
+                    new SelectListItem{Value = Helper.Client, Text = Helper.Client}
+                };
+            }
         }
 
         public static List<SelectListItem> GetTimeDropDown()

@@ -43,6 +43,7 @@ namespace AppointmentScheduler.Controllers
                 {
                     var user =await _userManager.FindByNameAsync(model.Email);
                     HttpContext.Session.SetString("ssUserName", user.Name);
+                    //var ssUserName = HttpContext.Session.GetString("ssUserName");
                     return RedirectToAction("Index", "Appointment");
                 }
 
@@ -88,7 +89,15 @@ namespace AppointmentScheduler.Controllers
                 if(result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, model.RoleType);
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    if (!User.IsInRole(Helper.Admin))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                    }
+                    else
+                    {
+                        TempData["signUp_newAdmin"] = user.Name;
+                    }
                     return RedirectToAction("Index", "Appointment");
                 }
 

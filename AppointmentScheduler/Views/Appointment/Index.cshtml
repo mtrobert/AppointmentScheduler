@@ -1,15 +1,32 @@
 ﻿@*@model AppointmentScheduler.Models.ViewModels.HairdresserVM*@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
 <div class="row">
+    @if (TempData.ContainsKey("signUp_newAdmin"))
+    {
+        <div class="container">
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                <strong>Account created for @TempData["signUp_newAdmin"]</strong>
+            </div>
+        </div>        
+    }
+
     <div class="container">
         @if (User.IsInRole(AppointmentScheduler._Utilities.Helper.Admin))
         {
-        <div class="form-group row col-2">
-            <label>Select Hairdresser</label>
-            @Html.DropDownList("hairdresserId", new SelectList(ViewBag.HairdresserList, "Id", "Name"),new { @class="form-control select2",
-                                                                @onchange= "onHairdresserChange()"
-                                                                })
-        </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label>Select Hairdresser</label>
+                    @Html.DropDownList("hairdresserId", new SelectList(ViewBag.HairdresserList, "Id", "Name"),new { @class="form-control select2",
+                                                                        @onchange= "onHairdresserChange()"})
+                </div>
+
+                <div class="col-3 offset-5">
+                    <a asp-controller="Account" asp-action="Register" class="btn-secondary form-control">Register Admin User</a> 
+                </div>
+            </div>
         }
 
     <div id="calendar"></div>
@@ -19,3 +36,7 @@
 
 
 <partial name="_Appointment_AddEdit"/>
+
+<div class="text-right pt-2">
+    <p>Logged In as @HttpContextAccessor.HttpContext.Session.GetString("ssUserName")</p>
+</div>
