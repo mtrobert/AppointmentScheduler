@@ -1,5 +1,6 @@
 ﻿using AppointmentScheduler._Utilities;
 using AppointmentScheduler.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppointmentScheduler.Controllers
 {
+    [Authorize]
     public class AppointmentController : Controller
     {
         private readonly IAppointmentService _appointmentService;
@@ -17,6 +19,7 @@ namespace AppointmentScheduler.Controllers
             _appointmentService = appointmentService;
         }
 
+        //[Authorize(Roles = Helper.Admin)] <- an example of authorization
         public IActionResult Index()
         {
             ViewBag.HairdresserList = _appointmentService.GetHairdresserList();

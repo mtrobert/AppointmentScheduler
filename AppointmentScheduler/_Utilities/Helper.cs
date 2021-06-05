@@ -8,7 +8,7 @@ namespace AppointmentScheduler._Utilities
 {
     public static class Helper
     {
-        public static string Admin = "Admin";
+        public const string Admin = "Admin";
         public static string Client = "Client";
         public static string Hairdresser = "Hairdresser";
         public static string appointmentAdded = "Appointment added successfully.";
