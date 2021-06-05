@@ -25,6 +25,18 @@ namespace AppointmentScheduler.Services
             if (appointmentVM != null && appointmentVM.Id > 0)
             {
                 //update appointment
+
+                var appointment = _db.Appointments.FirstOrDefault(x => x.Id == appointmentVM.Id);
+                appointment.Title = appointmentVM.Title;
+                appointment.Desctiption = appointmentVM.Desctiption;
+                appointment.StartDate = startDate;
+                appointment.EndDate = endDate;
+                appointment.Duration = appointmentVM.Duration;
+                appointment.HairdresserId = appointmentVM.HairdresserId;
+                appointment.ClientId = appointmentVM.ClientId;
+                appointment.IsHairdresserApproved = false;
+                appointment.AdminId = appointmentVM.AdminId;
+                await _db.SaveChangesAsync();
                 return 1;
             }
             else
