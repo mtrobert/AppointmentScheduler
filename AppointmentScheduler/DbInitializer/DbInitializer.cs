@@ -48,7 +48,7 @@ namespace AppointmentScheduler.DbInitializer
             _userManager.CreateAsync(new ApplicationUser 
             { 
                 UserName = "robert.m.1305@gmail.com",
-                Email = "robert.m.1305@gmail.com",
+                Email = "robert@gmail.com",
                 Name = "Admin Rob",
                 EmailConfirmed = true,
                 
