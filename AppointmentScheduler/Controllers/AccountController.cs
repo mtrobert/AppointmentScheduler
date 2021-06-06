@@ -61,14 +61,8 @@ namespace AppointmentScheduler.Controllers
         }
 
 
-        public async Task<IActionResult> Register()
-        {
-            if(!_roleManager.RoleExistsAsync(Helper.Admin).GetAwaiter().GetResult())
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Helper.Admin));
-                await _roleManager.CreateAsync(new IdentityRole(Helper.Client));
-                await _roleManager.CreateAsync(new IdentityRole(Helper.Hairdresser));
-            }
+        public IActionResult Register()
+        {            
             return View();
         }
 
